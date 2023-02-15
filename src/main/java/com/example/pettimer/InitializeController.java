@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.awt.Desktop;
@@ -63,8 +64,13 @@ public class InitializeController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    private boolean noAcc = true;
+
     @FXML
     private ImageView collapseImg;
+
+    @FXML
+    private Text noAccText;
 
     @FXML
     void loginButtonClicked(ActionEvent event) {
@@ -141,6 +147,30 @@ public class InitializeController implements Initializable {
     void collapseImgClicked(MouseEvent event) {
         Stage stage = (Stage) collapseImg.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    @FXML
+    void noAccTextClicked(MouseEvent event) {
+        if(noAcc)
+        {
+            noAccText.setText("    Cancel");
+            loginButton.setText("Create");
+            noAcc = false;
+
+            loginField.setText("");
+            passField.setText("");
+            pass2Field.setText("");
+        }
+        else
+        {
+            noAccText.setText("No account?");
+            loginButton.setText("Login");
+            noAcc = true;
+
+            loginField.setText("");
+            passField.setText("");
+            pass2Field.setText("");
+        }
     }
 
     @Override
