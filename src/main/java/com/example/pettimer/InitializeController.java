@@ -27,9 +27,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class InitializeController implements Initializable {
+
+    private MyDataBase DateBase = new MyDataBase();
+    private Connection cn = DateBase.connectToDB("postgres", "postgres", "kbndbyjd");
 
     @FXML
     private Circle circle1;
@@ -72,17 +77,38 @@ public class InitializeController implements Initializable {
     @FXML
     private Text noAccText;
 
+    public InitializeController() throws SQLException {
+    }
+
     @FXML
-    void loginButtonClicked(ActionEvent event) {
+    void loginButtonClicked(ActionEvent event) throws SQLException {
 
-        ScaleTransition st = new ScaleTransition(Duration.millis(200), slidingField);
-        st.setToX(1);
-        st.play();
+        if (loginButton.getText().equals("Login"))
+        {
+            if(passField.isVisible())
+            {
+                DateBase.tryToLogin(loginField.getText(), passField.getText(), cn);
+            }
+            else
+            {
+                DateBase.tryToLogin(loginField.getText(), pass2Field.getText(), cn);
+            }
+        }
+        else if(loginButton.getText().equals("Create"))
+        {
 
-        TranslateTransition tt = new TranslateTransition(Duration.millis(200), slidingField);
-        tt.setToX(0);
-        tt.play();
-        loginButton.setText("Login");
+        }
+        else
+        {
+            ScaleTransition st = new ScaleTransition(Duration.millis(200), slidingField);
+            st.setToX(1);
+            st.play();
+
+            TranslateTransition tt = new TranslateTransition(Duration.millis(200), slidingField);
+            tt.setToX(0);
+            tt.play();
+            loginButton.setText("Login");
+        }
     }
 
     private void setRotate(Circle c, boolean reverse, int angle, int duration)
@@ -157,9 +183,6 @@ public class InitializeController implements Initializable {
             loginButton.setText("Create");
             noAcc = false;
 
-            loginField.setText("");
-            passField.setText("");
-            pass2Field.setText("");
         }
         else
         {
@@ -167,10 +190,10 @@ public class InitializeController implements Initializable {
             loginButton.setText("Login");
             noAcc = true;
 
-            loginField.setText("");
-            passField.setText("");
-            pass2Field.setText("");
         }
+        loginField.setText("");
+        passField.setText("");
+        pass2Field.setText("");
     }
 
     @Override
@@ -185,8 +208,5 @@ public class InitializeController implements Initializable {
         TranslateTransition ttFirst = new TranslateTransition(Duration.millis(1), slidingField);
         ttFirst.setToX(-200);
         ttFirst.play();
-
-
-
     }
 }

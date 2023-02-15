@@ -3,6 +3,7 @@ module com.example.pettimer {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
+    requires java.sql;
 
 
     opens com.example.pettimer to javafx.fxml;
