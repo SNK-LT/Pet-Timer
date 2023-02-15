@@ -4,6 +4,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,9 +57,14 @@ public class InitializeController implements Initializable {
     @FXML
     private ImageView showPassImage;
 
+    @FXML
+    private ImageView closeImg;
 
     private double xOffset = 0;
     private double yOffset = 0;
+
+    @FXML
+    private ImageView collapseImg;
 
     @FXML
     void loginButtonClicked(ActionEvent event) {
@@ -70,6 +76,7 @@ public class InitializeController implements Initializable {
         TranslateTransition tt = new TranslateTransition(Duration.millis(200), slidingField);
         tt.setToX(0);
         tt.play();
+        loginButton.setText("Login");
     }
 
     private void setRotate(Circle c, boolean reverse, int angle, int duration)
@@ -122,6 +129,18 @@ public class InitializeController implements Initializable {
     @FXML
     void helpClicked(ActionEvent event) throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/SNK-LT/PetTimer/blob/master/README.md"));
+    }
+
+    @FXML
+    void closeImgClicked(MouseEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    void collapseImgClicked(MouseEvent event) {
+        Stage stage = (Stage) collapseImg.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     @Override
