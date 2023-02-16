@@ -1,7 +1,7 @@
 
 <div align="center">
   
-# PetTimer
+# Pet Timer
 </div>
 
 <div align="center">
